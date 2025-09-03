@@ -1,0 +1,26 @@
+# Python cache and environment
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv/
+env/
+venv/
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+# Data files
+train.csv
+train_clean.csv
+test.csv
+# Model files
+saved_model/
+*.pt
+*.pth
+# Streamlit cache
+.streamlit/
+# OS files
+.DS_Store
+Thumbs.db
+# Logs
+*.log
