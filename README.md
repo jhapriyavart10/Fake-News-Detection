@@ -1,7 +1,5 @@
 # Fake News Detection with Transformers
 
-## Project Explanation for Beginners
-
 This project helps you detect whether a news headline or article is **Fake** or **Real** using machine learning and deep learning. You will learn how to clean data, train models, and use a web app to make predictions.
 
 ### What Am I Building?
