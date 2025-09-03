@@ -63,6 +63,8 @@ def eval_model(model, data_loader, device):
 
 def main():
     df = pd.read_csv('train_clean.csv')
+    if 'label' not in df.columns:
+        raise ValueError("Column 'label' not found in train_clean.csv. Please check your CSV headers.")
     X_train, X_val, y_train, y_val = train_test_split(df['content'], df['label'], test_size=0.2, random_state=42)
     tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
     train_ds = NewsDataset(X_train.tolist(), y_train.tolist(), tokenizer)

@@ -10,7 +10,6 @@ STOPWORDS = set(stopwords.words('english'))
 def clean_text(text):
     text = str(text).lower()
     text = re.sub(r"http\S+|www\S+|https\S+", '', text, flags=re.MULTILINE)
-    text = re.sub(r'\@w+|\#','', text)
     text = re.sub(r'[^A-Za-z\s]', '', text)
     text = ' '.join([word for word in text.split() if word not in STOPWORDS])
     return text
@@ -21,12 +20,14 @@ def preprocess(input_csv, output_csv):
         return
     df = pd.read_csv(input_csv)
     if 'label' not in df.columns:
-        print("Error: 'label' column not found in the input CSV. Please ensure your dataset has a 'label' column (0=Fake, 1=Real).")
+        print("Error: 'label' column not found in the input CSV. Please ensure your dataset has a 'label' column.")
         print("Columns found:", df.columns.tolist())
         return
+    # Convert label to numeric if needed
+    if df['label'].dtype == object:
+        df['label'] = df['label'].map({'real': 1, 'fake': 0})
     df['content'] = (df['title'].fillna('') + ' ' + df['text'].fillna('')).apply(clean_text)
-    # Save only relevant columns plus content
-    columns_to_save = [col for col in ['id', 'title', 'author', 'text', 'label'] if col in df.columns] + ['content']
+    columns_to_save = [col for col in ['title', 'text', 'date', 'source', 'author', 'category', 'label'] if col in df.columns] + ['content']
     df.to_csv(output_csv, index=False, columns=columns_to_save)
 
 if __name__ == "__main__":
